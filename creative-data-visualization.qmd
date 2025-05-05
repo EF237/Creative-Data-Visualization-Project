@@ -124,11 +124,13 @@ theme(
 Finally, I animated the visualization.
 
 ```{r}
-animate(p, fps = 10, width = 500, height = 500, renderer = gifski_renderer("fireworks.gif"))
+if (!file.exists("fireworks.gif")) {
+  animate(p, fps = 10, width = 500, height = 500, renderer = gifski_renderer("fireworks.gif"))
+}
 ```
 
-## End Results (Run All do not Render)
+## End Results
 
 ```{r}
-knitr::include_graphics("fireworks.gif")
+htmltools::img(src = "fireworks.gif", width = "500px", height = "500px")
 ```
