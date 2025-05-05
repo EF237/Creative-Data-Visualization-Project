@@ -5,6 +5,10 @@ format: html
 editor: visual
 ---
 
+
+
+# \*\*\*Please press (Run All) before Rendering
+
 ## Risky Firework Show
 
 My graduate research focuses on addiction and its effects on behavior and brain structure. One of my recent projects examined cognitive function in the context of risky decision-making using a novel reward-based lever-pressing paradigm called the “Blackjack Task.”
@@ -17,6 +21,8 @@ I analyzed data from the initial training phase—when the animals were first in
 
 ## Preliminaries
 
+
+
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(lubridate)
@@ -24,9 +30,13 @@ library(gganimate)
 library(gifski)
 ```
 
+
+
 I created a streamlined version of the original dataset containing four key variables for the presentation: `Subject`, `Sex`, `StartDate`, and `TOT HR%`. These represent the animal's identification number, its sex, the date of testing, and the proportion of high-reward presses, respectively.
 
 ## Data Wrangling
+
+
 
 ```{r, message=FALSE, warning=FALSE}
 # Load data
@@ -40,9 +50,13 @@ d_Male <- d |>
   mutate(color = `TOT HR%`) # Change the name to color for better interpretation
 ```
 
+
+
 ## Making Fireworks
 
 Contrary to popular belief, fireworks don't simply appear in the sky—they're launched like missiles that propel upward. I wanted to replicate that missile-like trajectory using the following parameters as my starting point. **Note: Everywhere you see the variable `fw`, it is simply an abbreviation for "fireworks."**
+
+
 
 ```{r, message=FALSE, warning=FALSE}
 launch_height <- 1.5 
@@ -51,14 +65,22 @@ fw_per_rat <- 15
 frame_counter <- 1
 ```
 
+
+
 To highlight the transition in risk expression across days, I grouped the dataset by day, splitting the original data into four distinct subsets.
+
+
 
 ```{r, message=FALSE, warning=FALSE}
 grouped_by_day <- split(d_Male, d_Male$StartDate)
 firework_show <- list()
 ```
 
+
+
 This loop goes through each unique testing day and creates an animated firework sequence for all rats tested on that day. It generates a vertical "missile" animation for each rat, followed by an explosion of colored sparks whose size and spread are based on each rat’s risk score or `TOT HR%`. All these frames are stored and combined into a single dataset called `fireworks`.
+
+
 
 ```{r, message=FALSE, warning=FALSE}
 for (day_data in grouped_by_day) {
@@ -99,7 +121,11 @@ for (day_data in grouped_by_day) {
 fireworks <- bind_rows(firework_show)
 ```
 
+
+
 Next, I used ggplot to set up the visual environment and define the plot dynamics. For the spark colors, I chose a mix of neon shades to make them stand out. I set the background to black to resemble a night sky—after all, no one watches fireworks during the day.
+
+
 
 ```{r, message=FALSE, warning=FALSE}
 p <- ggplot(fireworks, aes(x = x, y = y, group = Subject)) +
@@ -121,14 +147,23 @@ theme(
   transition_manual(frames = frame)
 ```
 
+
+
 Finally, I animated the visualization.
+
+
 
 ```{r}
 animate(p, fps = 10, width = 500, height = 500, renderer = gifski_renderer("fireworks.gif"))
 ```
 
-## End Results (Run All do not Render)
+
+
+## End Results
+
+
 
 ```{r}
 knitr::include_graphics("fireworks.gif")
 ```
+
