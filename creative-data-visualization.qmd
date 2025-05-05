@@ -30,7 +30,7 @@ I created a streamlined version of the original dataset containing four key vari
 
 ```{r, message=FALSE, warning=FALSE}
 # Load data
-d <- read_csv("~/Desktop/ADA-REPO/creative-data-visualization/CDV-Data.csv", col_names = TRUE)
+d <- read_csv("https://raw.githubusercontent.com/EF237/Creative-Data-Visualization-Project/refs/heads/main/CDV-Data.csv", col_names = TRUE)
 
 # Prepare female rat data
 d_Male <- d |>
